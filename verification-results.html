@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Results | EV TrustCheck</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .result-container {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .result-container h1 {
+            color: #123047;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 10px 18px;
+            margin: 15px;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .result-item {
+            padding: 15px;
+            margin: 12px 0;
+            background: #f5f8f7;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .result-container button {
+            margin: 12px 5px;
+            padding: 13px 20px;
+            background: #168b45;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .result-container button:hover {
+            background: #106b35;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <h2>⚡ EV TrustCheck</h2>
+        <a href="index.html">Home</a>
+    </header>
+
+    <main class="result-container">
+
+        <h1>Vehicle Verification Results</h1>
+
+        <p>Your vehicle details have been submitted for review.</p>
+
+        <div class="status">Verification Pending</div>
+
+        <div class="result-item">
+            <strong>Vehicle Details:</strong>
+            <span id="vehicleName">Awaiting vehicle data</span>
+        </div>
+
+        <div class="result-item">
+            <strong>Document Status:</strong>
+            Awaiting Backend Review
+        </div>
+
+        <div class="result-item">
+            <strong>Battery Health:</strong>
+            Awaiting Verification
+        </div>
+
+        <div class="result-item">
+            <strong>Accident History:</strong>
+            Awaiting Verification
+        </div>
+
+        <p>
+            Final verification results will appear after backend integration.
+        </p>
+
+        <button onclick="location.href='battery-health.html'">
+            View Battery Health
+        </button>
+
+        <button onclick="location.href='price-comparison.html'">
+            View Price Comparison
+        </button>
+
+        <button onclick="location.href='index.html'">
+            Back to Home
+        </button>
+
+    </main>
+
+    <script>
+        const savedData = sessionStorage.getItem("vehicleDetails");
+
+        if (savedData) {
+            const vehicle = JSON.parse(savedData);
+
+            document.getElementById("vehicleName").textContent =
+                vehicle.company + " " + vehicle.model;
+        }
+    </script>
+
+</body>
+</html>

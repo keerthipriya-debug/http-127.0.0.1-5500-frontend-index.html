@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f8f7;
+    color: #0b1f33;
+    line-height: 1.6;
+}
+
+/* Navigation */
+.navbar {
+    background: #0b1f33;
+    color: white;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #35d08a;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 28px;
+}
+
+.navbar nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar nav a:hover {
+    color: #35d08a;
+}
+
+/* Hero */
+.hero {
+    min-height: 480px;
+    padding: 100px 8%;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(120deg, #e7f8ef, white);
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.tag {
+    background: #d4f5e4;
+    color: #128653;
+    padding: 9px 16px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: 52px;
+    line-height: 1.2;
+    margin: 25px 0;
+    color: #0b1f33;
+}
+
+.hero h1 span {
+    color: #16a36a;
+    display: block;
+}
+
+.hero p {
+    font-size: 17px;
+    color: #526477;
+    margin-bottom: 30px;
+}
+
+.primary-btn {
+    display: inline-block;
+    background: #16a36a;
+    color: white;
+    padding: 14px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* About */
+.about {
+    text-align: center;
+    padding: 75px 10%;
+    background: white;
+}
+
+.about h2,
+.features h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.about p {
+    max-width: 850px;
+    margin: auto;
+    color: #526477;
+    font-size: 17px;
+}
+
+/* Features */
+.features {
+    padding: 75px 8%;
+    text-align: center;
+}
+
+.feature-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-top: 40px;
+}
+
+.feature-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    border: 1px solid #e2eee8;
+    box-shadow: 0 5px 20px rgba(11, 31, 51, 0.06);
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    border-color: #16a36a;
+}
+
+.feature-card h3 {
+    color: #128653;
+    margin-bottom: 15px;
+    font-size: 19px;
+}
+
+.feature-card p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Footer */
+footer {
+    background: #0b1f33;
+    color: white;
+    text-align: center;
+    padding: 35px 15px;
+}
+
+footer h3 {
+    color: #35d08a;
+    margin-bottom: 10px;
+}
+
+footer p {
+    font-size: 14px;
+    margin: 5px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .feature-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero {
+        padding: 70px 7%;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .feature-container {
+        grid-template-columns: 1fr;
+    }
+}
+/* Feature Card Hover Effect */
+.feature-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+/* Vehicle Details Page */
+
+.vehicle-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    background: #f5f8f7;
+    min-height: 80vh;
+}
+
+.vehicle-page h1 {
+    color: #123047;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.vehicle-page p {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.vehicle-page form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 550px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.vehicle-page label {
+    margin: 12px 0 6px;
+    font-weight: bold;
+    color: #123047;
+}
+
+.vehicle-page input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.vehicle-page button {
+    margin-top: 25px;
+    padding: 14px;
+    background: #168b45;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.vehicle-page button:hover {
+    background: #106b35;
+}

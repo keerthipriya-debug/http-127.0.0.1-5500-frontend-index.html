@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | EV TrustCheck</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .admin-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 25px;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-header h1 {
+            color: #123047;
+            font-size: 34px;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .stat-card h2 {
+            color: #168b45;
+            font-size: 30px;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .admin-table th {
+            background: #123047;
+            color: white;
+        }
+
+        .pending {
+            color: #b7791f;
+            font-weight: bold;
+        }
+
+        .admin-note {
+            margin-top: 20px;
+            color: #666;
+            text-align: center;
+        }
+
+        @media (max-width: 650px) {
+            .admin-container {
+                padding: 12px;
+                overflow-x: auto;
+            }
+
+            .admin-table {
+                min-width: 600px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <h2>⚡ EV TrustCheck</h2>
+        <a href="index.html">Home</a>
+    </header>
+
+    <main class="admin-container">
+
+        <div class="admin-header">
+            <h1>Admin Dashboard</h1>
+            <p>Monitor vehicle verification requests.</p>
+        </div>
+
+        <section class="admin-stats">
+
+            <div class="stat-card">
+                <h3>Total Vehicles</h3>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending Reviews</h3>
+                <h2>--</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Verified Vehicles</h3>
+                <h2>--</h2>
+            </div>
+
+        </section>
+
+        <h2>Verification Requests</h2>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Vehicle</th>
+                    <th>Registration</th>
+                    <th>Submitted Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Awaiting backend data</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td class="pending">Pending</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="admin-note">
+            Live vehicle records and verification statistics
+            will appear after backend integration.
+        </p>
+
+    </main>
+
+</body>
+</html>

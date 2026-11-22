@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Upload | EV TrustCheck</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .upload-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .upload-container h1 {
+            color: #123047;
+            text-align: center;
+        }
+
+        .upload-container p {
+            text-align: center;
+            color: #666;
+        }
+
+        .upload-container label {
+            display: block;
+            margin-top: 22px;
+            font-weight: bold;
+            color: #123047;
+        }
+
+        .upload-container input[type="file"] {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        .upload-container button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #168b45;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .upload-container button:hover {
+            background: #106b35;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #168b45;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <h2>⚡ EV TrustCheck</h2>
+        <a href="index.html">Home</a>
+    </header>
+
+    <main class="upload-container">
+
+        <h1>Upload Vehicle Documents</h1>
+        <p>Upload available documents for verification.</p>
+
+        <form id="uploadForm">
+
+            <label for="rc">Registration Certificate (RC)</label>
+            <input type="file" id="rc" accept=".pdf,.jpg,.jpeg,.png">
+
+            <label for="insurance">Insurance Document</label>
+            <input type="file" id="insurance" accept=".pdf,.jpg,.jpeg,.png">
+
+            <label for="service">Service History Document</label>
+            <input type="file" id="service" accept=".pdf,.jpg,.jpeg,.png">
+
+            <label for="battery">Battery Report</label>
+            <input type="file" id="battery" accept=".pdf,.jpg,.jpeg,.png">
+
+            <button type="submit">Continue to Verification</button>
+
+        </form>
+
+        <a class="back-link" href="vehicle-details.html">
+            Back to Vehicle Details
+        </a>
+
+    </main>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            window.location.href = "verification-results.html";
+        });
+    </script>
+
+</body>
+</html>

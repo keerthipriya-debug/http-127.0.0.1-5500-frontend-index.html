@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Health | EV TrustCheck</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .battery-container {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .battery-container h1 {
+            color: #123047;
+        }
+
+        .battery-card {
+            background: #f5f8f7;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .battery-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #168b45;
+        }
+
+        .battery-note {
+            color: #666;
+            margin: 20px 0;
+        }
+
+        .battery-container button {
+            padding: 13px 22px;
+            background: #168b45;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <h2>⚡ EV TrustCheck</h2>
+        <a href="index.html">Home</a>
+    </header>
+
+    <main class="battery-container">
+
+        <h1>Battery Health Dashboard</h1>
+        <p>Review the available battery information.</p>
+
+        <div class="battery-card">
+            <h3>Claimed Battery Health</h3>
+            <div class="battery-value" id="batteryValue">Not Available</div>
+        </div>
+
+        <div class="battery-card">
+            <h3>Battery Replacement History</h3>
+            <p id="replacementValue">Awaiting vehicle data</p>
+        </div>
+
+        <div class="battery-card">
+            <h3>Odometer Reading</h3>
+            <p id="odometerValue">Not Available</p>
+        </div>
+
+        <p class="battery-note">
+            Actual battery health assessment will be available after backend integration.
+        </p>
+
+        <button onclick="location.href='verification-results.html'">
+            Back to Results
+        </button>
+
+    </main>
+
+    <script>
+        const savedData = sessionStorage.getItem("vehicleDetails");
+
+        if (savedData) {
+            const vehicle = JSON.parse(savedData);
+
+            document.getElementById("batteryValue").textContent =
+                vehicle.claimed_battery_health_pct + "%";
+
+            document.getElementById("replacementValue").textContent =
+                vehicle.battery_replacement_history;
+
+            document.getElementById("odometerValue").textContent =
+                vehicle.odometer_km + " km";
+        }
+    </script>
+
+</body>
+</html>

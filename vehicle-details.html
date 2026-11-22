@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Details | EV TrustCheck</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <h2>⚡ EV TrustCheck</h2>
+        <a href="index.html">Home</a>
+    </header>
+
+    <section class="hero vehicle-page">
+
+        <h1>Enter Vehicle Details</h1>
+        <p>Provide information about the second-hand electric vehicle.</p>
+
+        <form id="vehicleForm">
+
+            <label for="company">Vehicle Company</label>
+            <input type="text" id="company" name="company"
+                   placeholder="Enter company name" required>
+
+            <label for="model">Vehicle Model</label>
+            <input type="text" id="model" name="model"
+                   placeholder="Enter vehicle model" required>
+
+            <label for="year">Manufacturing Year</label>
+            <input type="number" id="year" name="manufacturing_year"
+                   placeholder="Enter year" min="2000" max="2026" required>
+
+            <label for="registration">Registration Number</label>
+            <input type="text" id="registration" name="registration_number"
+                   placeholder="Enter registration number" required>
+
+            <label for="battery">Claimed Battery Health (%)</label>
+            <input type="number" id="battery"
+                   name="claimed_battery_health_pct"
+                   placeholder="Enter battery health"
+                   min="0" max="100" required>
+
+            <label for="odometer">Odometer Reading (km)</label>
+            <input type="number" id="odometer" name="odometer_km"
+                   placeholder="Enter kilometres" min="0" required>
+
+            <label for="replacement">Battery Replacement History</label>
+            <select id="replacement" name="battery_replacement_history" required>
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Unknown">Unknown</option>
+            </select>
+
+            <label for="accident">Accident History</label>
+            <select id="accident" name="accident_history" required>
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Unknown">Unknown</option>
+            </select>
+
+            <label for="service">Service History</label>
+            <select id="service" name="service_history" required>
+                <option value="">Select an option</option>
+                <option value="Available">Available</option>
+                <option value="Not Available">Not Available</option>
+                <option value="Unknown">Unknown</option>
+            </select>
+
+            <label for="price">Asking Price (₹)</label>
+            <input type="number" id="price" name="asking_price_inr"
+                   placeholder="Enter asking price" min="1" required>
+
+            <button type="submit">Submit Details</button>
+
+        </form>
+
+    </section>
+
+    <script>
+        const vehicleForm = document.getElementById("vehicleForm");
+
+        vehicleForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const vehicleData = Object.fromEntries(
+                new FormData(vehicleForm).entries()
+            );
+
+            sessionStorage.setItem(
+                "vehicleDetails",
+                JSON.stringify(vehicleData)
+            );
+
+            window.location.href = "document-upload.html";
+        });
+    </script>
+
+</body>
+</html>
