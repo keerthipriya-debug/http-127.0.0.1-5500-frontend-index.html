@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EV TrustCheck | Smart EV Verification</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -116,6 +116,22 @@
         <p>Smart Verification for Second-Hand Electric Vehicles</p>
         <p>© 2026 EV TrustCheck. All rights reserved.</p>
     </footer>
+<script>
+async function checkBackend() {
+    try {
+        const response = await fetch(
+            "https://http-127-0-0-1-5500-frontend-index-html.onrender.com/api/status"
+        );
 
+        const data = await response.json();
+        console.log("Backend Connected:", data);
+
+    } catch (error) {
+        console.error("Backend Connection Failed:", error);
+    }
+}
+
+checkBackend();
+</script>
 </body>
 </html>

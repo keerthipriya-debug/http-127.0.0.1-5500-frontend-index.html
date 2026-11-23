@@ -15,24 +15,20 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-
         .upload-container h1 {
             color: #123047;
             text-align: center;
         }
-
         .upload-container p {
             text-align: center;
             color: #666;
         }
-
         .upload-container label {
             display: block;
             margin-top: 22px;
             font-weight: bold;
             color: #123047;
         }
-
         .upload-container input[type="file"] {
             width: 100%;
             margin-top: 10px;
@@ -40,7 +36,6 @@
             border: 1px solid #ccc;
             border-radius: 7px;
         }
-
         .upload-container button {
             width: 100%;
             margin-top: 25px;
@@ -52,11 +47,6 @@
             font-size: 16px;
             cursor: pointer;
         }
-
-        .upload-container button:hover {
-            background: #106b35;
-        }
-
         .back-link {
             display: block;
             text-align: center;
@@ -67,19 +57,16 @@
 </head>
 
 <body>
-
     <header class="navbar">
         <h2>⚡ EV TrustCheck</h2>
         <a href="index.html">Home</a>
     </header>
 
     <main class="upload-container">
-
         <h1>Upload Vehicle Documents</h1>
         <p>Upload available documents for verification.</p>
 
         <form id="uploadForm">
-
             <label for="rc">Registration Certificate (RC)</label>
             <input type="file" id="rc" accept=".pdf,.jpg,.jpeg,.png">
 
@@ -92,23 +79,77 @@
             <label for="battery">Battery Report</label>
             <input type="file" id="battery" accept=".pdf,.jpg,.jpeg,.png">
 
-            <button type="submit">Continue to Verification</button>
-
+            <button type="submit" id="submitBtn">
+                Continue to Verification
+            </button>
         </form>
+
+        <p id="uploadMessage"></p>
 
         <a class="back-link" href="vehicle-details.html">
             Back to Vehicle Details
         </a>
-
     </main>
 
     <script>
-        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+    document.getElementById("uploadForm").addEventListener(
+        "submit", async function(event) {
             event.preventDefault();
 
-            window.location.href = "verification-results.html";
-        });
-    </script>
+            const fields = ["rc", "insurance", "service", "battery"];
+            const documents = {};
 
+            fields.forEach(function(id) {
+                const file = document.getElementById(id).files[0];
+
+                if (file) {
+                    documents[id] = {
+                        filename: file.name,
+                        file_type: file.type,
+                        size: file.size
+                    };
+                }
+            });
+
+            const message = document.getElementById("uploadMessage");
+            const button = document.getElementById("submitBtn");
+
+            button.disabled = true;
+            message.textContent = "Saving document information...";
+
+            try {
+                const response = await fetch(
+                    "https://http-127-0-0-1-5500-frontend-index-html.onrender.com/api/documents",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ documents: documents })
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || "Upload failed");
+                }
+
+                sessionStorage.setItem(
+                    "documentDetails",
+                    JSON.stringify(documents)
+                );
+
+                message.textContent = "Document information saved!";
+                window.location.href = "verification-results.html";
+
+            } catch (error) {
+                message.textContent =
+                    "Backend API not available yet: " + error.message;
+                button.disabled = false;
+            }
+        }
+    );
+    </script>
 </body>
 </html>
