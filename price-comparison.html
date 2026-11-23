@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Price Comparison | EV TrustCheck</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <header class="navbar">
@@ -14,26 +15,83 @@
     </header>
 
     <section class="hero vehicle-page">
+
         <h1>EV Price Comparison</h1>
         <p>Compare the asking price with available market reference data.</p>
 
         <div class="result-card">
+
             <h2>Price Analysis</h2>
 
-            <p><strong>Vehicle:</strong> Awaiting vehicle data</p>
-            <p><strong>Asking Price:</strong> Pending</p>
-            <p><strong>Estimated Market Price:</strong> Not Available</p>
-            <p><strong>Price Difference:</strong> Not Calculated</p>
-
-            <p class="result-note">
-                Price comparison will be available after backend integration.
+            <p>
+                <strong>Vehicle:</strong>
+                <span id="vehicleName">Loading...</span>
             </p>
+
+            <p>
+                <strong>Manufacturing Year:</strong>
+                <span id="vehicleYear">Loading...</span>
+            </p>
+
+            <p>
+                <strong>Asking Price:</strong>
+                <span id="askingPrice">Loading...</span>
+            </p>
+
+            <p>
+                <strong>Estimated Market Price:</strong>
+                <span id="marketPrice">Not Available</span>
+            </p>
+
+            <p>
+                <strong>Price Difference:</strong>
+                <span id="priceDifference">Not Available</span>
+            </p>
+
+            <p class="result-note" id="priceMessage">
+                Market reference data is not connected yet.
+            </p>
+
         </div>
 
         <a href="vehicle-details.html">
             <button type="button">Check Another Vehicle</button>
         </a>
+
+        <a href="verification-results.html">
+            <button type="button">Back to Results</button>
+        </a>
+
     </section>
+
+    <script>
+        const vehicle = JSON.parse(
+            sessionStorage.getItem("vehicleDetails") || "{}"
+        );
+
+        const vehicleName =
+            `${vehicle.company || ""} ${vehicle.model || ""}`.trim();
+
+        document.getElementById("vehicleName").textContent =
+            vehicleName || "No vehicle data";
+
+        document.getElementById("vehicleYear").textContent =
+            vehicle.manufacturing_year || "Not Available";
+
+        document.getElementById("askingPrice").textContent =
+            vehicle.asking_price_inr
+                ? "₹" + Number(vehicle.asking_price_inr).toLocaleString("en-IN")
+                : "Not Available";
+
+        document.getElementById("marketPrice").textContent =
+            "Not Available";
+
+        document.getElementById("priceDifference").textContent =
+            "Not Calculated";
+
+        document.getElementById("priceMessage").textContent =
+            "Market reference data is required for an accurate price comparison.";
+    </script>
 
 </body>
 </html>
