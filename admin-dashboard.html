@@ -22,6 +22,7 @@
         }
 
         .dashboard-card h2 {
+
             color: #123047;
         }
 
@@ -124,9 +125,11 @@ async function loadDashboard() {
     try {
         const [vehicleResponse, documentResponse] =
             await Promise.all([
-                fetch("https://http-127-0-0-1-5500-frontend-index-html.onrender.com/api/vehicles"),
-                fetch("https://http-127-0-0-1-5500-frontend-index-html.onrender.com/api/documents")
-            ]);
+                fetch("https://ev-trustcheck-api.onrender.com/api/vehicles"),
+                fetch("https://ev-trustcheck-api.onrender.com/api/documents")
+]);
+
+
 
         if (!vehicleResponse.ok || !documentResponse.ok) {
             throw new Error("Unable to load dashboard data");
