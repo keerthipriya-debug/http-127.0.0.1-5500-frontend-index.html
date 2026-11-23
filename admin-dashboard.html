@@ -5,35 +5,181 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | EV TrustCheck</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .dashboard-card {
+            background: white;
+            padding: 22px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .record {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 8px;
+        }
+        .status {
+            color: #b7791f;
+            font-weight: bold;
+        }
+        button {
+            padding: 12px 20px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 7px;
+            background: #168b45;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <header class="navbar">
-        <h2>⚡ EV TrustCheck</h2>
-        <a href="index.html">Home</a>
-    </header>
+<header class="navbar">
+    <h2>⚡ EV TrustCheck</h2>
+    <a href="index.html">Home</a>
+</header>
 
-    <section class="hero vehicle-page">
-        <h1>Admin Dashboard</h1>
-        <p>Monitor vehicle verification activities.</p>
+<main class="dashboard-container">
+    <h1>Admin Dashboard</h1>
+    <p>Monitor vehicle verification activities.</p>
 
-        <div class="result-card">
-            <h2>Dashboard Overview</h2>
-
-            <p><strong>Total Vehicles Submitted:</strong> Pending</p>
-            <p><strong>Documents Awaiting Review:</strong> Pending</p>
-            <p><strong>Verifications Completed:</strong> Pending</p>
-            <p><strong>Verifications In Progress:</strong> Pending</p>
-
-            <p class="result-note">
-                Dashboard statistics will appear after backend integration.
-            </p>
-        </div>
-
-        <a href="index.html">
-            <button type="button">Back to Home</button>
-        </a>
+    <section class="dashboard-card">
+        <h2>Dashboard Overview</h2>
+        <p><strong>Total Vehicles Submitted:</strong> <span id="totalVehicles">Loading...</span></p>
+        <p><strong>Total Documents Submitted:</strong> <span id="totalDocuments">Loading...</span></p>
+        <p><strong>Documents Awaiting Review:</strong> <span id="documentsPending">Loading...</span></p>
+        <p><strong>Verifications Completed:</strong> <span id="completed">0</span></p>
+        <p><strong>Verifications In Progress:</strong> <span id="inProgress">Loading...</span></p>
     </section>
+
+    <section class="dashboard-card">
+        <h2>Submitted Vehicles</h2>
+        <div id="vehicleList">Loading...</div>
+    </section>
+
+    <section class="dashboard-card">
+        <h2>Submitted Documents</h2>
+        <div id="documentList">Loading...</div>
+    </section>
+
+    <p id="dashboardMessage"></p>
+
+    <button type="button" onclick="loadDashboard()">Refresh Dashboard</button>
+    <a href="index.html"><button type="button">Back to Home</button></a>
+</main>
+
+<script>
+async function loadDashboard() {
+    const message = document.getElementById("dashboardMessage");
+
+    try {
+        const [vehicleResponse, documentResponse] = await Promise.all([
+            fetch("http://127.0.0.1:5000/api/vehicles"),
+            fetch("http://127.0.0.1:5000/api/documents")
+        ]);
+
+        if (!vehicleResponse.ok || !documentResponse.ok) {
+            throw new Error("Unable to load dashboard data");
+        }
+
+        const vehicleData = await vehicleResponse.json();
+        const documentData = await documentResponse.json();
+
+        const vehicles = vehicleData.vehicles || [];
+        const documents = documentData.documents || [];
+
+        document.getElementById("totalVehicles").textContent =
+            vehicleData.total_vehicles ?? vehicles.length;
+
+        document.getElementById("totalDocuments").textContent =
+            documentData.total_documents ?? documents.length;
+
+        document.getElementById("documentsPending").textContent =
+            documents.filter(d => d.status === "Pending Review").length;
+
+        document.getElementById("completed").textContent = 0;
+        document.getElementById("inProgress").textContent = vehicles.length;
+
+        const vehicleList = document.getElementById("vehicleList");
+        vehicleList.innerHTML = "";
+
+        if (vehicles.length === 0) {
+            vehicleList.textContent = "No vehicles submitted yet.";
+        }
+
+        vehicles.forEach(vehicle => {
+            const item = document.createElement("div");
+            item.className = "record";
+
+            const title = document.createElement("h3");
+            title.textContent = `${vehicle.company || ""} ${vehicle.model || ""}`.trim();
+
+            const year = document.createElement("p");
+            year.textContent = "Year: " + (vehicle.manufacturing_year || "N/A");
+
+            const registration = document.createElement("p");
+            registration.textContent = "Registration: " + (vehicle.registration_number || "N/A");
+
+            const price = document.createElement("p");
+            price.textContent = "Asking Price: " +
+                (vehicle.asking_price_inr
+                    ? "₹" + Number(vehicle.asking_price_inr).toLocaleString("en-IN")
+                    : "N/A");
+
+            const status = document.createElement("p");
+            status.textContent = "Status: Pending Verification";
+            status.className = "status";
+
+            item.append(title, year, registration, price, status);
+            vehicleList.appendChild(item);
+        });
+
+        const documentList = document.getElementById("documentList");
+        documentList.innerHTML = "";
+
+        if (documents.length === 0) {
+            documentList.textContent = "No documents submitted yet.";
+        }
+
+        documents.forEach(record => {
+            const item = document.createElement("div");
+            item.className = "record";
+
+            const title = document.createElement("h3");
+            title.textContent = "Document Record #" + record.id;
+            item.appendChild(title);
+
+            Object.entries(record.documents || {}).forEach(([type, file]) => {
+                const p = document.createElement("p");
+                p.textContent = type.toUpperCase() + ": " + (file.filename || "Unknown file");
+                item.appendChild(p);
+            });
+
+            const status = document.createElement("p");
+            status.textContent = "Status: " + (record.status || "Pending Review");
+            status.className = "status";
+            item.appendChild(status);
+
+            documentList.appendChild(item);
+        });
+
+        message.textContent = "Dashboard connected successfully!";
+
+    } catch (error) {
+        message.textContent = "Backend connection failed. Check the server.";
+        console.error(error);
+    }
+}
+
+loadDashboard();
+</script>
 
 </body>
 </html>
